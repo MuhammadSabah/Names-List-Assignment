@@ -10,118 +10,104 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> _genders = [
+  final List<String> _genderParams = [
     'Male',
     'Female',
   ];
+  final List<int> _limits = [10, 20, 30, 40, 50, 60, 70];
+  final List<String> _sortParams = ['positive', 'negative'];
+
   String _genderValue = 'M';
   int _limitValue = 10;
   String _sortValue = 'positive';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.dark,
       theme: ThemeData(
         fontFamily: GoogleFonts.notoSansArabic().fontFamily,
       ),
-      home: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    DropdownButton(
-                      items: const [
-                        DropdownMenuItem(
-                          value: 'positive',
-                          child: Text('Positive'),
-                        ),
-                        DropdownMenuItem(
-                          value: 'negative',
-                          child: Text('Negative'),
-                        ),
-                      ],
-                      value: _sortValue,
-                      onChanged: (value) {
-                        if (value is String) {
-                          setState(() {
-                            _sortValue = value;
-                          });
-                        }
-                      },
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Names List'),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  DropdownButton(
+                    hint: const Text(
+                      'Sort by',
+                      style: TextStyle(color: Colors.white),
                     ),
-                    DropdownButton(
-                      items: const [
-                        DropdownMenuItem(
-                          value: 'M',
-                          child: Text(
-                            'نێر',
-                          ),
-                        ),
-                        DropdownMenuItem(
-                          value: 'F',
-                          child: Text(
-                            'مێ',
-                          ),
-                        ),
-                      ],
-                      value: _genderValue,
-                      onChanged: (value) {
-                        if (value is String) {
-                          setState(() {
-                            _genderValue = value;
-                          });
-                        }
-                      },
+                    items: _sortParams.map((value) {
+                      return DropdownMenuItem(
+                        value: _sortValue,
+                        child: Text(value.toString()),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      if (value is String) {
+                        setState(() {
+                          _sortValue = value;
+                        });
+                      }
+                    },
+                  ),
+                  DropdownButton(
+                    hint: const Text(
+                      'Gender',
+                      style: TextStyle(color: Colors.white),
                     ),
-                    DropdownButton(
-                      items: const [
-                        DropdownMenuItem(
-                          value: 10,
-                          child: Text('10'),
-                        ),
-                        DropdownMenuItem(
-                          value: 20,
-                          child: Text('20'),
-                        ),
-                        DropdownMenuItem(
-                          value: 30,
-                          child: Text('30'),
-                        ),
-                        DropdownMenuItem(
-                          value: 40,
-                          child: Text('40'),
-                        ),
-                        DropdownMenuItem(
-                          value: 50,
-                          child: Text('50'),
-                        ),
-                      ],
-                      value: _limitValue,
-                      onChanged: (value) {
-                        if (value is int) {
-                          setState(() {
-                            _limitValue = value;
-                          });
-                        }
-                      },
+                    items: _genderParams.map((value) {
+                      return DropdownMenuItem(
+                        value: _genderValue,
+                        child: Text(value.toString()),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      if (value is String) {
+                        setState(() {
+                          _genderValue = value;
+                        });
+                      }
+                    },
+                  ),
+                  DropdownButton(
+                    hint: const Text(
+                      'Limit',
+                      style: TextStyle(color: Colors.white),
                     ),
-                  ],
-                ),
-                NamesBuilder(
+                    items: _limits.map((value) {
+                      return DropdownMenuItem(
+                        value: _limitValue,
+                        child: Text(value.toString()),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      if (value is int) {
+                        setState(() {
+                          _limitValue = value;
+                        });
+                      }
+                    },
+                  ),
+                ],
+              ),
+              Directionality(
+                textDirection: TextDirection.rtl,
+                child: NamesBuilder(
                   genderValue: _genderValue,
                   limitValue: _limitValue,
                   sortValue: _sortValue,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
