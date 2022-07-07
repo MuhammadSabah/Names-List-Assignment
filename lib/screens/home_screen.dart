@@ -10,10 +10,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> _genderParams = [
-    'Male',
-    'Female',
-  ];
+  final List<String> _genderParams = ['Male', 'Female'];
   final List<int> _limits = [10, 20, 30, 40, 50, 60, 70];
   final List<String> _sortParams = ['positive', 'negative'];
 
@@ -47,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     items: _sortParams.map((value) {
                       return DropdownMenuItem(
-                        value: _sortValue,
+                        value: value,
                         child: Text(value.toString()),
                       );
                     }).toList(),
@@ -66,14 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     items: _genderParams.map((value) {
                       return DropdownMenuItem(
-                        value: _genderValue,
+                        value: value,
                         child: Text(value.toString()),
                       );
                     }).toList(),
                     onChanged: (value) {
                       if (value is String) {
                         setState(() {
-                          _genderValue = value;
+                          if (value == "Female") {
+                            _genderValue = 'F';
+                          } else if (value == "Male") {
+                            _genderValue = 'M';
+                          }
                         });
                       }
                     },
@@ -85,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     items: _limits.map((value) {
                       return DropdownMenuItem(
-                        value: _limitValue,
+                        value: value,
                         child: Text(value.toString()),
                       );
                     }).toList(),
